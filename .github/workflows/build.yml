@@ -1,0 +1,69 @@
+name: Import quotidien et publication
+
+# Reconstruit le dashboard à partir des CSV et publie le site sur GitHub Pages :
+#  - à chaque push (nouveaux CSV déposés dans data/), après tests et contrôle qualité
+#  - chaque jour à 05:17 UTC (import automatique si CSV_ZIP_URL est défini)
+#  - à la demande (onglet Actions > Run workflow)
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      CSV_ZIP_URL: ${{ secrets.CSV_ZIP_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Optionnel : récupère l'archive du jour (secret CSV_ZIP_URL = lien vers un .zip de CSV)
+      - name: Importer les CSV du jour
+        if: ${{ env.CSV_ZIP_URL != '' }}
+        run: |
+          curl -fsSL "$CSV_ZIP_URL" -o import.zip
+          rm -f data/*.csv
+          unzip -o -j import.zip '*.csv' -d data/
+
+      - name: Tester la chaîne d'import
+        run: python -m unittest discover -s tests -v
+
+      # Contrôle qualité inclus : en cas d'anomalie bloquante, le job échoue,
+      # le site en ligne garde la version précédente et le rapport s'affiche dans l'onglet Actions.
+      - name: Contrôler les CSV et générer le dashboard
+        run: python dashboard/build.py data site
+
+      - name: Générer l'article
+        env:
+          SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+        run: python article/build.py site
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

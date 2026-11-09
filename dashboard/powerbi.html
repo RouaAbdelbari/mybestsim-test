@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tableau de bord eSIM · MyBestSim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* Style « rapport BI » : cadre navy, onglets, cartes KPI à icône jaune, visuels denses */
+:root{--navy:#14235c;--navy2:#1d3178;--tab:#3d7be6;--yel:#f5c518;--blue:#2f6fe0;--blue2:#8fb4f4;--grey:#c3cad8;--grn:#23a943;--red:#d23b33;
+--bg:#e9eef6;--card:#fff;--ink:#14235c;--tx:#1f2937;--mut:#5b6476;--bd:#d6dce8;--serif:"Libre Baskerville",Georgia,"Times New Roman",serif;--sans:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg)}
+body{font:13px/1.45 var(--sans);color:var(--tx);padding:18px max(14px,env(safe-area-inset-left)) 30px}
+.frame{max-width:1380px;margin:0 auto;background:var(--navy);border-radius:14px;padding:10px 12px 12px;box-shadow:0 2px 10px rgba(20,35,92,.18)}
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:4px 6px 10px}
+.mark{width:34px;height:34px;border-radius:50%;background:#fff;display:grid;place-items:center;overflow:hidden;flex:none}.mark img{width:30px}
+.top h1{margin:0;color:#fff;font:700 15px var(--serif);letter-spacing:.06em;text-transform:uppercase}
+.tabs{margin-left:auto;display:flex;gap:6px;background:var(--navy2);padding:4px;border-radius:10px 10px 0 0}
+.tabs button{all:unset;cursor:pointer;font:700 12.5px var(--serif);color:var(--yel);padding:8px 18px;border-radius:7px 7px 0 0}
+.tabs button[aria-selected="true"]{background:var(--tab);color:#fff}
+.tabs button:focus-visible{outline:2px solid var(--yel)}
+.top .logo{height:34px;width:auto;background:#fff;border-radius:8px;padding:2px 6px}
+.page{background:var(--card);border-radius:10px;padding:14px 16px 16px}
+.bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:1px solid var(--bd);padding-bottom:10px;margin-bottom:12px}
+.bar h2{margin:0;font:700 14px var(--serif);color:var(--ink);text-transform:uppercase;letter-spacing:.04em}
+.flt{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.flt label{display:flex;align-items:center;gap:6px;font:700 11.5px var(--serif);color:var(--ink)}
+.flt select{font:600 12px var(--sans);color:var(--tx);border:1px solid #9aa6bf;border-radius:4px;padding:3px 6px;background:#fff;max-width:150px}
+.flt input[type=range]{accent-color:var(--blue);width:110px}
+.flt b{font:600 12px var(--sans);min-width:46px}
+.rs{all:unset;cursor:pointer;font:700 11.5px var(--serif);color:var(--blue);padding:4px 6px}
+.upd{font:400 11px var(--sans);color:var(--mut);width:100%;text-align:right;margin-top:-6px}
+.kpis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.kpi{border:1px solid var(--bd);border-radius:6px;padding:8px 10px;box-shadow:0 1px 2px rgba(20,35,92,.08)}
+.kpi .h{display:flex;align-items:center;gap:6px;font:700 11.5px var(--serif);color:var(--ink)}
+.kpi .h i{width:18px;height:18px;border-radius:4px;background:var(--yel);display:grid;place-items:center;flex:none}
+.kpi .h i svg{width:12px;height:12px;stroke:var(--navy);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.kpi .v{font:700 20px var(--serif);color:var(--ink);text-align:center;margin-top:4px;white-space:nowrap}
+.kpi .v.sm{font-size:15px;padding-top:4px}.kpi .v.neg{color:var(--red)}.kpi .v.pos{color:var(--grn)}
+.row{display:grid;gap:10px;margin-bottom:10px}
+.r4{grid-template-columns:1fr 1fr 1fr 1.15fr}.r3{grid-template-columns:repeat(3,1fr)}.r1{grid-template-columns:1fr}.r2{grid-template-columns:1.7fr 1fr}
+.box{border:1px solid var(--bd);border-radius:6px;padding:8px 10px;min-width:0;box-shadow:0 1px 2px rgba(20,35,92,.08)}
+.box h3{margin:0 0 6px;font:700 12px var(--serif);color:var(--ink);text-align:center}
+.cv{position:relative;height:210px}.cv.tall{height:260px}.cv.line{height:230px}
+.tw{overflow:auto;max-height:330px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{font:700 11.5px var(--serif);color:var(--ink);text-align:right;padding:6px 8px;border-bottom:1.5px solid var(--ink);white-space:nowrap;position:sticky;top:0;background:#fff;z-index:1}
+th:first-child,th:nth-child(2){text-align:left}
+td{padding:3px 8px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;border-bottom:1px solid #eef1f6}
+td:first-child,td:nth-child(2){text-align:left}
+tr.grp td{font-weight:700;color:var(--ink);background:#f6f8fc;cursor:pointer}
+tr.grp td:first-child span{display:inline-block;width:14px;font-weight:400;color:var(--mut)}
+td.hl{background:#fdf3c8;position:relative}
+td .db{position:absolute;left:0;top:3px;bottom:3px;background:rgba(245,197,24,.55);z-index:0}
+td .db+span{position:relative;z-index:1}
+td.bb{position:relative}td.bb .db{background:rgba(47,111,224,.22)}
+.ar{display:inline-block;width:14px;text-align:center;font-weight:700;margin-right:4px}
+.up{color:var(--red)}.dn{color:var(--grn)}.eq{color:var(--yel)}
+.tops li{display:grid;grid-template-columns:minmax(0,150px) 1fr auto;gap:8px;align-items:center;font-size:12px;padding:5px 0}
+.tops{list-style:none;margin:0;padding:4px 2px}
+.tops .nm{text-align:right;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tops .tr{height:10px;background:#eef2fa}.tops .tr i{display:block;height:100%;background:var(--blue)}
+.tops .vl{font-weight:700;font-size:11.5px;min-width:54px}
+.rank td{padding:5px 8px;border-bottom:1px solid #e3e8f2}
+.rank td.rk{text-align:center;font:700 13px var(--serif);color:var(--navy);width:70px}
+.rank td.lg{text-align:center;width:70px}.rank td.lg img{height:28px;max-width:60px;object-fit:contain;vertical-align:middle}
+.rank td.lg span{font:700 10.5px var(--sans);color:var(--ink)}
+.rank td.nm{font:700 13px var(--serif);color:var(--ink)}
+.star{color:var(--yel);font-size:15px}.star.o{color:#c9ced8}
+.sp{width:110px;height:26px;display:block;margin-left:auto}
+.empty{display:none;text-align:center;padding:60px 20px;color:var(--mut)}.empty b{display:block;font:700 16px var(--serif);color:var(--ink);margin-bottom:6px}
+.ex .view{display:none!important}.ex .empty{display:block}
+.view{display:none}.view.on{display:block}
+.note{font-size:11.5px;color:var(--mut);margin:8px 2px 0;line-height:1.5}
+.alt{color:#c9d6ff;font:400 11.5px var(--sans);text-decoration:none;margin-left:6px}.alt:hover{color:#fff}
+@media(max-width:1180px){.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}.r4{grid-template-columns:1fr 1fr}.r3{grid-template-columns:1fr 1fr}.r2{grid-template-columns:1fr}}
+@media(max-width:720px){body{padding:10px 8px 20px}.frame{padding:8px}.tabs{margin-left:0;width:100%;overflow-x:auto}.tabs button{padding:8px 10px;font-size:11.5px;white-space:nowrap}
+.top .logo{display:none}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.r4,.r3{grid-template-columns:1fr}.flt{margin-left:0}.flt select{max-width:120px}.page{padding:10px}}
+</style></head><body>
+<div class="frame">
+  <div class="top">
+    <div class="mark"><img id="lg" alt="MyBestSim"></div>
+    <h1>Tableau de bord eSIM</h1>
+    <a class="alt" href="../">Vue classique</a>
+    <div class="tabs" role="tablist" aria-label="Pages du rapport">
+      <button role="tab" data-t="v1" aria-selected="true">Vue d'ensemble</button>
+      <button role="tab" data-t="v2" aria-selected="false">Analyses &amp; Tops</button>
+      <button role="tab" data-t="v3" aria-selected="false">Classement fournisseurs</button>
+    </div>
+  </div>
+  <div class="page" id="app">
+    <div class="bar">
+      <h2 id="ttl">Synthèse du marché eSIM</h2>
+      <div class="flt">
+        <label>Fournisseur : <select id="fp"></select></label>
+        <label>Destination : <select id="fc"></select></label>
+        <label>Data : <select id="fd"></select></label>
+        <label>Validité : <select id="fv"><option value="">Toutes</option><option value="7">7 jours</option><option value="15">15 jours</option><option value="30">30 jours</option></select></label>
+        <label>Réseau : <select id="fn"><option value="">Tous</option><option value="0">4G</option><option value="1">5G</option></select></label>
+        <label>Prix max : <input type="range" id="fm"><b id="mx"></b></label>
+        <button class="rs" id="rs">Réinitialiser</button>
+      </div>
+      <div class="upd">Données actualisées le <span id="U"></span> · <span id="src"></span></div>
+    </div>
+    <div class="empty"><b>Aucune offre ne correspond à ces filtres</b>Élargissez la sélection ou réinitialisez les filtres.</div>
+
+    <!-- PAGE 1 -->
+    <section class="view on" id="v1">
+      <div class="kpis" id="k1"></div>
+      <div class="row r4">
+        <div class="box"><h3>Répartition des offres par volume</h3><div class="cv"><canvas id="cPie"></canvas></div></div>
+        <div class="box"><h3>Répartition par type de destination</h3><div class="cv"><canvas id="cDon"></canvas></div></div>
+        <div class="box"><h3>Prix moyen par volume de data</h3><div class="cv"><canvas id="cCol"></canvas></div></div>
+        <div class="box"><h3>Nombre d'offres par fournisseur</h3><div class="cv tall"><canvas id="cPrv"></canvas></div></div>
+      </div>
+      <div class="box"><div class="tw"><table id="mat"></table></div></div>
+      <p class="note">Cliquez sur un palier pour afficher le détail par durée. Écart vs palier : prix moyen de la durée comparé à celui de tout le palier, <span class="ar up">▲</span>plus de 5 % au-dessus, <span class="ar dn">▼</span>plus de 5 % en dessous, <span class="ar eq">━</span>dans la moyenne. Offres « Illimité » exclues de la data moyenne et du prix par Go.</p>
+    </section>
+
+    <!-- PAGE 2 -->
+    <section class="view" id="v2">
+      <div class="kpis" id="k2"></div>
+      <div class="row r3">
+        <div class="box"><h3>Top 5 des destinations par nombre d'offres</h3><ul class="tops" id="t1"></ul></div>
+        <div class="box"><h3>Top 5 des meilleurs prix au Go</h3><ul class="tops" id="t2"></ul></div>
+        <div class="box"><h3>Top 5 des offres les plus chères</h3><ul class="tops" id="t3"></ul></div>
+      </div>
+      <div class="box"><h3>Prix moyen et prix le plus bas, par volume de data</h3><div class="cv line"><canvas id="cLine"></canvas></div></div>
+    </section>
+
+    <!-- PAGE 3 -->
+    <section class="view" id="v3">
+      <div class="tw" style="max-height:none"><table class="rank" id="rank"></table></div>
+      <p class="note"><span class="star">★</span> 5 meilleurs prix moyens au Go de la sélection. Courbe : prix moyen du fournisseur par palier de data (1 Go → 50 Go). Écart : prix moyen du fournisseur comparé à la moyenne de la sélection.</p>
+    </section>
+  </div>
+</div>
+<script>
+let {P,C,R,L,B,U,F,Q}=/*__DATA__*/;
+const Z=["1 Go","3 Go","5 Go","10 Go","20 Go","50 Go","Illimité"],VOL=[1,3,5,10,20,50,-1],ZN=["Europe","Asie","Monde","Amérique du Nord"],lab=g=>g<0?"Illimité":g+" Go";
+const $=i=>document.getElementById(i),f=(n,d=2)=>n.toLocaleString("fr-FR",{minimumFractionDigits:d,maximumFractionDigits:d}),e=n=>f(n)+" €",
+ n0=n=>Math.round(n).toLocaleString("fr-FR"),avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:NaN,
+ med=a=>{if(!a.length)return NaN;const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2},
+ esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const IC={c:'<path d="M6 3h8l4 4v14H6z"/><rect x="9" y="12" width="6" height="6" rx="1"/>',b:'<path d="M4 21V5l8-2v18M12 9h8v12"/>',t:'<path d="M3 12V4h8l10 10-8 8z"/>',
+ d:'<path d="M2 9a15 15 0 0 1 20 0M5 13a10 10 0 0 1 14 0M9 17a5 5 0 0 1 6 0"/>',r:'<path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4"/>',p:'<path d="M6 18L18 6M8 7h.01M16 17h.01"/>',g:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+ a:'<path d="M5 15l7-7 7 7"/>',s:'<path d="M4 20h16M7 16V9M12 16V5M17 16v-4"/>'};
+const kpi=(ic,l,v,cl="")=>`<div class="kpi"><div class="h"><i><svg viewBox="0 0 24 24">${IC[ic]}</svg></i>${l}</div><div class="v ${cl}">${v}</div></div>`;
+let GMIN,GMAX,PM;
+const opt=(a,v,t="Tous")=>`<option value="">${t}</option>`+a.map((x,i)=>`<option value="${v?esc(x):i}">${esc(x)}</option>`).join("");
+function initData(){$("lg").src=B;$("U").textContent=U;$("src").textContent=`${F} fichiers CSV · ${n0(R.length)} offres · prix en EUR`;
+ $("fp").innerHTML=opt(P);$("fc").innerHTML=opt(C,0,"Toutes");$("fd").innerHTML=opt(Z,1);
+ GMIN=Math.min(...R.map(r=>r[4]));GMAX=Math.max(...R.map(r=>r[4]));PM=Math.ceil(GMAX);$("fm").min=Math.floor(GMIN);$("fm").max=PM;$("fm").value=PM}
+
+/* --- Chart.js : réglages communs + étiquettes de valeur --- */
+Chart.defaults.font.family='"Source Sans 3",system-ui,sans-serif';Chart.defaults.font.size=11;Chart.defaults.color="#5b6476";Chart.defaults.maintainAspectRatio=false;
+Chart.defaults.plugins.tooltip.backgroundColor="#14235c";Chart.defaults.plugins.legend.labels.boxWidth=8;Chart.defaults.plugins.legend.labels.usePointStyle=true;
+const VALS={id:"vals",afterDatasetsDraw(ch,a,o){if(!o||!o.fmt)return;const x=ch.ctx;x.save();x.font='700 10.5px "Source Sans 3",sans-serif';x.fillStyle="#14235c";
+ ch.data.datasets.forEach((ds,di)=>{if(o.only!=null&&o.only!==di)return;ch.getDatasetMeta(di).data.forEach((el,i)=>{const v=ds.data[i];if(v==null||isNaN(v))return;const t=o.fmt(v);
+ if(ch.config.type==="bar"&&ch.options.indexAxis==="y"){x.textAlign="left";x.textBaseline="middle";x.fillText(t,el.x+4,el.y)}
+ else{x.textAlign="center";x.textBaseline="bottom";x.fillText(t,el.x,el.y-(ch.config.type==="line"?7:3))}})});x.restore()}};
+Chart.register(VALS);
+const mk=(id,cfg)=>new Chart($(id),cfg);
+const CH={
+ pie:mk("cPie",{type:"pie",data:{labels:[],datasets:[{data:[],borderColor:"#fff",borderWidth:1.5}]},options:{plugins:{legend:{position:"top",labels:{font:{size:10}}},tooltip:{callbacks:{label:c=>` ${c.label} : ${n0(c.parsed)} offres (${f(c.parsed/c.dataset.data.reduce((a,b)=>a+b,0)*100,1)} %)`}}}}}),
+ don:mk("cDon",{type:"doughnut",data:{labels:[],datasets:[{data:[],borderColor:"#fff",borderWidth:2}]},options:{cutout:"55%",plugins:{legend:{position:"top",labels:{font:{size:10}}},tooltip:{callbacks:{label:c=>` ${c.label} : ${n0(c.parsed)} offres (${f(c.parsed/c.dataset.data.reduce((a,b)=>a+b,0)*100,1)} %)`}}}}}),
+ col:mk("cCol",{type:"bar",data:{labels:[],datasets:[{data:[],borderRadius:2,maxBarThickness:26}]},options:{plugins:{legend:{display:false},vals:{fmt:v=>f(v,0)+" €"},tooltip:{callbacks:{label:c=>" Prix moyen : "+e(c.parsed.y)}}},scales:{y:{display:false,grace:"12%"},x:{grid:{display:false},border:{display:false}}}}}),
+ prv:mk("cPrv",{type:"bar",data:{labels:[],datasets:[{data:[],backgroundColor:"#2f6fe0",maxBarThickness:12}]},options:{indexAxis:"y",plugins:{legend:{display:false},vals:{fmt:v=>n0(v)},tooltip:{callbacks:{label:c=>` ${n0(c.parsed.x)} offres`}}},scales:{x:{display:false,grace:"18%"},y:{grid:{display:false},border:{display:false},ticks:{autoSkip:false,font:{size:10.5,weight:600},color:"#14235c"}}}}}),
+ line:mk("cLine",{type:"line",data:{labels:[],datasets:[]},options:{plugins:{legend:{position:"top"},vals:{fmt:v=>f(v,2)+" €",only:0},tooltip:{callbacks:{label:c=>` ${c.dataset.label} : ${e(c.parsed.y)}`}}},scales:{y:{display:false,grace:"15%"},x:{grid:{display:false},border:{display:false},ticks:{font:{weight:600},color:"#14235c"}}}}})};
+const PIEC=["#14235c","#2f6fe0","#8fb4f4","#c3cad8","#f5c518","#23a943","#6b7a99"];
+
+/* --- filtres --- */
+const S=()=>({p:$("fp").value,c:$("fc").value,d:$("fd").value,v:$("fv").value,n:$("fn").value,m:+$("fm").value});
+const match=(r,s,sk)=>(sk||s.p===""||r[0]==s.p)&&(s.c===""||r[1]==s.c)&&(s.d===""||lab(r[2])==s.d)&&(s.v===""||r[3]==s.v)&&(s.n===""||r[5]==s.n)&&(s.m>=PM||r[4]<=s.m);
+let tab="v1";
+const TT={v1:"Synthèse du marché eSIM",v2:"Analyse comparative & tops",v3:"Classement général des fournisseurs"};
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+ document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id===tab));$("ttl").textContent=TT[tab];render();Object.values(CH).forEach(c=>c.resize())});
+["fp","fc","fd","fv","fn","fm"].forEach(i=>$(i).addEventListener("input",render));
+$("rs").onclick=()=>{["fp","fc","fd","fv","fn"].forEach(i=>$(i).value="");$("fm").value=PM;render()};
+const up=(c,labels,data,extra)=>{c.data.labels=labels;Object.assign(c.data.datasets[0],{data},extra||{});c.update()};
+const arrow=(v,m)=>{const d=(v-m)/m;return d>.05?`<span class="ar up" title="+${f(d*100,1)} %">▲</span>`:d<-.05?`<span class="ar dn" title="${f(d*100,1)} %">▼</span>`:`<span class="ar eq">━</span>`};
+
+function render(){
+ const s=S();$("mx").textContent=s.m>=PM?"Tous":s.m+" €";
+ const rows=R.filter(r=>match(r,s)),rnp=R.filter(r=>match(r,s,1));
+ $("app").classList.toggle("ex",!rows.length);if(!rows.length)return;
+ const pr=rows.map(r=>r[4]),dt=rows.filter(r=>r[2]>=0),A=avg(pr),PPG=avg(dt.filter(r=>r[2]>0).map(r=>r[4]/r[2]));
+ const nDest=new Set(rows.map(r=>r[1])).size,o100=pr.filter(p=>p>100).length,g5=rows.filter(r=>r[5]).length/rows.length;
+ if(tab==="v1"){
+  $("k1").innerHTML=kpi("c","Cartes eSIM",n0(rows.length))+kpi("b","Fournisseurs",new Set(rows.map(r=>r[0])).size)+kpi("t","Prix moyen",e(A))+
+   kpi("r","Fourchette de prix",`${f(Math.min(...pr))} – ${f(Math.max(...pr))} €`,"sm")+kpi("a","Plus de 100 €",n0(o100))+kpi("d","Data moyenne",dt.length?f(avg(dt.map(r=>r[2])),1)+" Go":"–")+kpi("g","Destinations",nDest);
+  const vc=VOL.map(g=>rows.filter(r=>r[2]==g).length);up(CH.pie,Z,vc,{backgroundColor:PIEC});
+  const isZ=r=>ZN.includes(C[r[1]]),dl=["Pays",...ZN],dv=[rows.filter(r=>!isZ(r)).length,...ZN.map(z=>rows.filter(r=>C[r[1]]===z).length)];
+  up(CH.don,dl,dv,{backgroundColor:["#2f6fe0","#14235c","#8fb4f4","#f5c518","#c3cad8"]});
+  const vp=VOL.map(g=>{const x=rows.filter(r=>r[2]==g).map(r=>r[4]);return x.length?avg(x):null}),fv=vp.filter(v=>v!=null),hi=Math.max(...fv),lo=Math.min(...fv);
+  up(CH.col,Z,vp,{backgroundColor:vp.map(v=>v===hi?"#23a943":v===lo?"#d23b33":"#c3cad8")});
+  const pc=P.map((p,i)=>({p,n:rows.filter(r=>r[0]==i).length})).filter(x=>x.n).sort((a,b)=>b.n-a.n);
+  up(CH.prv,pc.map(x=>x.p),pc.map(x=>x.n));
+  // matrice volume > durée
+  const mxA=Math.max(...VOL.flatMap(g=>[7,15,30].map(d=>avg(rows.filter(r=>r[2]==g&&r[3]==d).map(r=>r[4])))).filter(v=>!isNaN(v)));
+  const line=(lbl,sub,x,grp,g,ref)=>{if(!x.length)return"";const p=x.map(r=>r[4]),a=avg(p),gb=x.filter(r=>r[2]>0),pp=gb.length?avg(gb.map(r=>r[4]/r[2])):NaN,s5=x.filter(r=>r[5]).length/x.length,sh=x.length/rows.length;
+   return`<tr class="${grp?"grp":"sub"}"${grp?` data-g="${g}"`:` data-p="${g}"`}><td>${grp?`<span>${open.has(g)?"⊟":"⊞"}</span>`:""}${lbl}</td><td>${sub}</td><td>${n0(x.length)}</td>
+   <td class="hl"><i class="db" style="width:${Math.min(100,a/mxA*100)}%"></i><span>${e(a)}</span></td><td>${e(Math.min(...p))}</td><td>${e(Math.max(...p))}</td>
+   <td>${isNaN(pp)?"–":e(pp)}</td><td class="bb"><i class="db" style="width:${s5*100}%"></i><span>${f(s5*100,1)} %</span></td><td>${f(sh*100,1)} %</td><td>${ref?arrow(a,ref)+(a>=ref?"+":"")+f((a-ref)/ref*100,1)+" %":""}</td></tr>`};
+  let h=`<thead><tr><th>Volume</th><th>Validité</th><th>Offres</th><th>Prix moyen</th><th>Prix min</th><th>Prix max</th><th>Prix / Go</th><th>Part 5G</th><th>Part des offres</th><th>Écart vs palier</th></tr></thead><tbody>`;
+  VOL.forEach(g=>{const x=rows.filter(r=>r[2]==g);if(!x.length)return;h+=line(lab(g),"Toutes",x,1,g);const ga=avg(x.map(r=>r[4]));if(open.has(g))[7,15,30].forEach(d=>h+=line("",d+" jours",x.filter(r=>r[3]==d),0,g,ga))});
+  $("mat").innerHTML=h+"</tbody>";
+ }
+ if(tab==="v2"){
+  const gb=rows.filter(r=>r[2]>0);
+  $("k2").innerHTML=kpi("c","Offres",n0(rows.length))+kpi("t","Prix médian",e(med(pr)))+kpi("a","Prix le plus bas",e(Math.min(...pr)))+kpi("a","Prix le plus haut",e(Math.max(...pr)))+
+   kpi("p","Prix moyen / Go",isNaN(PPG)?"–":e(PPG))+kpi("s","Part 5G",f(g5*100,1)+" %")+kpi("r","Rechargeables",f(rows.filter(r=>r[6]).length/rows.length*100,1)+" %");
+  const li=(it,mx,fmt)=>it.map(x=>`<li><span class="nm" title="${esc(x.l)}">${esc(x.l)}</span><span class="tr"><i style="width:${x.v/mx*100}%"></i></span><span class="vl">${fmt(x.v)}</span></li>`).join("");
+  const dc={};rows.forEach(r=>{const n=C[r[1]];if(!ZN.includes(n))dc[n]=(dc[n]||0)+1});const td=Object.entries(dc).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([l,v])=>({l,v}));
+  $("t1").innerHTML=td.length?li(td,td[0].v,v=>n0(v)+" offres"):"<li>Aucune offre nationale</li>";
+  const bp=gb.map(r=>({l:`${C[r[1]]} · ${lab(r[2])} · ${r[3]} j · ${P[r[0]]}`,v:r[4]/r[2]})).sort((a,b)=>a.v-b.v).slice(0,5);
+  $("t2").innerHTML=bp.length?li(bp,Math.max(...bp.map(x=>x.v)),v=>f(v,2)+" €/Go"):"<li>Uniquement des offres illimitées</li>";
+  const ex=[...rows].sort((a,b)=>b[4]-a[4]).slice(0,5).map(r=>({l:`${C[r[1]]} · ${lab(r[2])} · ${r[3]} j · ${P[r[0]]}`,v:r[4]}));
+  $("t3").innerHTML=li(ex,ex[0].v,v=>e(v));
+  const av=VOL.map(g=>{const x=rows.filter(r=>r[2]==g).map(r=>r[4]);return x.length?+avg(x).toFixed(2):null}),mn=VOL.map(g=>{const x=rows.filter(r=>r[2]==g).map(r=>r[4]);return x.length?Math.min(...x):null});
+  CH.line.data.labels=Z;CH.line.data.datasets=[{label:"Prix moyen",data:av,borderColor:"#14235c",backgroundColor:"#d23b33",pointRadius:4,borderDash:[2,3],borderWidth:2,tension:.35},
+   {label:"Prix le plus bas",data:mn,borderColor:"#f5c518",backgroundColor:"#f5c518",pointRadius:3,borderDash:[4,3],borderWidth:2,stepped:false,tension:.2}];
+  CH.line.update();
+ }
+ if(tab==="v3"){
+  const ps=P.map((p,i)=>{const x=rnp.filter(r=>r[0]==i);if(!x.length)return null;const q=x.map(r=>r[4]),gb=x.filter(r=>r[2]>0);
+   return{p,i,n:x.length,a:avg(q),m:med(q),lo:Math.min(...q),hi:Math.max(...q),pg:gb.length?avg(gb.map(r=>r[4]/r[2])):NaN,d:new Set(x.map(r=>r[1])).size,g5:x.filter(r=>r[5]).length/x.length,
+   sp:VOL.slice(0,6).map(g=>{const y=x.filter(r=>r[2]==g).map(r=>r[4]);return y.length?avg(y):null})}}).filter(Boolean).sort((a,b)=>b.n-a.n||a.p.localeCompare(b.p));
+  const AA=avg(rnp.map(r=>r[4])),best=new Set([...ps].filter(x=>!isNaN(x.pg)).sort((a,b)=>a.pg-b.pg).slice(0,5).map(x=>x.p)),tot=rnp.length;
+  const spark=v=>{const p=v.map((y,i)=>y==null?null:[i,y]).filter(Boolean);if(p.length<2)return"";const ys=p.map(q=>q[1]),y0=Math.min(...ys),y1=Math.max(...ys),X=i=>4+i*(102/5),Y=y=>22-(y-y0)/((y1-y0)||1)*18;
+   return`<svg class="sp" viewBox="0 0 110 26" aria-hidden="true"><polyline fill="none" stroke="#d23b33" stroke-width="1.6" points="${p.map(q=>X(q[0])+","+Y(q[1])).join(" ")}"/></svg>`};
+  $("rank").innerHTML=`<thead><tr><th style="text-align:center">Classement</th><th>Nom</th><th style="text-align:center">Logo</th><th>Offres</th><th>Part</th><th>Prix moyen</th><th>Médiane</th><th>Min – Max</th><th>Prix / Go</th><th>Destinations</th><th>Part 5G</th><th>Écart vs marché</th><th>Prix par palier</th></tr></thead><tbody>`+
+   ps.map((x,k)=>{const t=k/(Math.max(1,ps.length-1));const bg=`rgb(${Math.round(47+(214-47)*t)},${Math.round(111+(228-111)*t)},${Math.round(224+(250-224)*t)})`;
+   return`<tr${s.p!==""&&+s.p===x.i?' style="outline:2px solid #f5c518"':""}><td class="rk" style="background:${bg};color:${t<.45?"#fff":"#14235c"}">${k+1}</td><td class="nm">${esc(x.p)}</td>
+   <td class="lg">${L[x.p]?`<img src="${L[x.p]}" alt="${esc(x.p)}">`:`<span>${esc(x.p)}</span>`}</td><td>${n0(x.n)}</td><td>${f(x.n/tot*100,1)} %</td><td><b>${e(x.a)}</b></td><td>${e(x.m)}</td>
+   <td>${f(x.lo,0)} – ${f(x.hi,0)} €</td><td><span class="star${best.has(x.p)?"":" o"}">${best.has(x.p)?"★":"☆"}</span> ${isNaN(x.pg)?"–":e(x.pg)}</td><td>${x.d}</td><td>${f(x.g5*100,0)} %</td>
+   <td>${arrow(x.a,AA)}${(x.a>=AA?"+":"")+f((x.a-AA)/AA*100,1)} %</td><td>${spark(x.sp)}</td></tr>`}).join("")+"</tbody>";
+ }
+}
+const open=new Set();
+$("mat").addEventListener("click",ev=>{const t=ev.target.closest("tr.grp");if(!t)return;const g=+t.dataset.g;open.has(g)?open.delete(g):open.add(g);render()});
+initData();open.add(VOL[0]);render();
+</script></body></html>

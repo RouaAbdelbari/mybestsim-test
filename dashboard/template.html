@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>eSIM Market Overview · MyBestSim</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--blue:#12a3ea;--deep:#0b7fc0;--navy:#0f1c2e;--sky:#f3f9fd;--card:#fff;--tx:#0f1c2e;--mut:#66788a;--bd:#e3edf4;--yel:#f5b800;--grn:#17b26a;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky:#0a1420;--card:#101d2c;--tx:#e8f1f8;--navy:#e8f1f8;--mut:#8ea3b6;--bd:#1c3042;--deep:#4ab8f0;color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0;background:var(--sky);color:var(--tx);font:14px/1.55 Poppins,system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;min-height:100vh}
+aside{width:224px;flex:none;background:var(--card);border-right:1px solid var(--bd);padding:22px 16px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:26px}
+.lg{display:flex;align-items:center;gap:10px}.lg img{width:46px;height:auto;border-radius:6px;background:#fff}.lg b{font-size:16px;color:var(--navy);line-height:1.1}.lg span{display:block;font-size:11px;color:var(--mut);font-weight:400}
+nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;color:var(--mut);text-decoration:none;font-weight:500;margin-bottom:4px;border-left:3px solid transparent}
+nav a.on{color:var(--deep);background:var(--sky);border-left-color:var(--blue);font-weight:600}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.side-n{margin-top:auto;font-size:11.5px;color:var(--mut)}
+.content{flex:1;min-width:0;padding:28px 34px 56px;max-width:1240px}
+.view{display:none}.view.on{display:block}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+h1{font-size:25px;line-height:1.2;margin:0;color:var(--navy);font-weight:600}h1 em{color:var(--blue);font-style:normal}
+header p{margin:2px 0 0;color:var(--mut)}.upd{font-size:12px;color:var(--mut);display:flex;align-items:center;gap:6px}.upd:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--grn)}
+.flt{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;padding:0 0 18px;border-bottom:1px solid var(--bd);margin-bottom:22px}
+.flt label{display:flex;flex-direction:column;font-size:10.5px;text-transform:uppercase;letter-spacing:.8px;color:var(--mut);font-weight:600;gap:4px}
+select{font:500 13px Poppins,system-ui,sans-serif;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:7px 8px;min-width:128px}
+input[type=range]{accent-color:var(--blue);width:140px}.flt b{color:var(--tx);text-transform:none;letter-spacing:0}
+.rs{margin-left:auto;background:none;border:0;color:var(--deep);font:600 13px Poppins,sans-serif;cursor:pointer;padding:8px 2px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));background:var(--card);border:1px solid var(--bd);border-radius:12px;margin-bottom:18px}
+.kp{display:flex;gap:12px;align-items:center;padding:18px 20px;border-right:1px solid var(--bd)}.kp:last-child{border:0}
+.kp .ic{width:38px;height:38px;border-radius:10px;background:var(--sky);color:var(--blue);display:grid;place-items:center}
+.kp small{display:block;color:var(--mut);font-size:12px}.kp b{font-size:23px;font-weight:600;color:var(--navy);line-height:1.2}
+.g{display:grid;gap:18px;margin-bottom:18px}.g3{grid-template-columns:1.25fr 1fr 1fr}.g2{grid-template-columns:1fr 1fr}
+@media(max-width:1100px){.g3{grid-template-columns:1fr 1fr}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:18px 20px;min-width:0}
+.card h3{margin:0;font-size:15px;font-weight:600;color:var(--navy)}.card .d{margin:1px 0 12px;color:var(--mut);font-size:12px}
+.cv{position:relative;height:290px}.cv.t{height:360px}
+.ptn{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.pt{height:70px;border:1px solid var(--bd);border-radius:10px;display:grid;place-items:center;padding:8px;cursor:pointer;background:#fff;transition:border-color .15s}
+.pt:hover,.pt.on{border-color:var(--blue)}.pt img{max-height:50px;max-width:100%;object-fit:contain}.pt span{font-weight:600;color:#0f1c2e;font-size:13px;text-align:center}
+.tb{width:100%;border-collapse:collapse;font-size:13px}.tb th{font-size:10.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--mut);font-weight:600;text-align:right;padding:8px 6px;border-bottom:1px solid var(--bd)}
+.tb td{padding:9px 6px;border-bottom:1px solid var(--bd);text-align:right}.tb tr:last-child td{border:0}.tb th:first-child,.tb td:first-child{text-align:left}
+.tb tbody tr.cl{cursor:pointer}.tb tbody tr.cl:hover td,.tb tr.on td{background:var(--sky)}
+.mb{display:inline-block;height:6px;border-radius:3px;background:var(--blue);vertical-align:middle;margin-right:8px}
+.rk{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--sky);color:var(--deep);font-size:11px;font-weight:600;margin-right:8px}
+.pill{font-weight:600;color:var(--deep)}.pill.y{background:#fff4cc;color:#8a6500;padding:2px 9px;border-radius:20px}
+.ov{overflow-x:auto}
+#empty{display:none;text-align:center;padding:70px 20px;color:var(--mut)}#empty b{display:block;color:var(--navy);font-size:17px;margin-bottom:4px}
+#load{padding:70px;text-align:center;color:var(--mut)}
+.ex .view,.ex .flt{display:none}.ex #empty{display:block}
+@media(max-width:820px){body{flex-direction:column}aside{width:100%;height:auto;position:static;flex-direction:row;align-items:center;gap:14px;padding:12px 16px;flex-wrap:wrap}nav{display:flex;gap:6px}nav a{margin:0}.side-n{display:none}.content{padding:20px 16px 40px}.g2,.g3{grid-template-columns:1fr}.rs{margin-left:0}}
+
+/* --- ajouts : bandeau prix, tuiles partenaires, carte de chaleur, méthodologie --- */
+.pb{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:28px;align-items:center;margin-bottom:18px}
+.pb small{display:block;color:var(--mut);font-size:12px}.pb b.v{display:block;font-size:21px;font-weight:600;color:var(--navy);white-space:nowrap;line-height:1.3}
+.pb .r{text-align:right}
+.trk{position:relative;height:60px;min-width:0}.trk:before{content:"";position:absolute;left:0;right:0;top:29px;height:2px;background:var(--bd)}
+.trk .ln{position:absolute;top:27px;height:6px;border-radius:3px;background:#a9d9f4}
+.trk .hi{position:absolute;top:27px;height:6px;border-radius:0 3px 3px 0;background:var(--yel)}
+.trk .m{position:absolute;top:20px;width:2px;height:20px;margin-left:-1px;background:var(--navy)}
+.trk .m.a{width:12px;height:12px;top:24px;margin-left:-6px;border-radius:50%;background:var(--blue);border:2px solid var(--card)}
+.trk .m.c{background:var(--yel)}
+.trk .m span{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;font-weight:600;color:var(--mut)}
+.trk .m.a span{top:-20px;color:var(--deep)}.trk .m.d span{top:22px}.trk .m.c span{top:-20px}
+.trk .e{position:absolute;top:44px;font-size:10.5px;color:var(--mut)}
+.pt{height:auto;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px 8px}
+.pt .lo{height:48px;display:grid;place-items:center;width:100%}.pt .lo img{max-height:46px}
+.pt i{font-style:normal;font-size:11px;color:#56687a;text-align:center;line-height:1.35}.pt.off{opacity:.45}
+.hm{width:100%;border-collapse:separate;border-spacing:3px;font-size:12.5px}
+.hm th{font-size:10.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--mut);font-weight:600;padding:4px;text-align:center}.hm th:first-child{text-align:left}
+.hm td{height:36px;border-radius:6px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
+.hm td.rh{text-align:left;color:var(--tx);font-weight:500;padding-right:6px}.hm td.mo{border:1px dashed var(--bd);color:var(--tx);font-weight:500}
+.lgd{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin-top:10px}.lgd i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:0}
+.note{font-size:12px;color:var(--mut);max-width:110ch;margin:4px 0 0;line-height:1.6}.note b{color:var(--tx);font-weight:600}
+@media(max-width:820px){.pb{grid-template-columns:1fr 1fr;gap:14px 20px}.trk{grid-column:1/-1;grid-row:2}}
+@media(max-width:560px){.pb{grid-template-columns:1fr}.pb .r{text-align:left}.trk{grid-row:auto;height:74px}.trk .e{top:58px}}
+.imp{display:flex;flex-direction:column;gap:6px}
+.bi{font-size:12.5px;font-weight:600;color:var(--deep);text-decoration:none;padding:0 12px}.bi:hover{text-decoration:underline}
+@media(max-width:820px){.bi{display:none}}
+.impb{display:flex;align-items:center;justify-content:center;gap:8px;border:1px dashed var(--blue);color:var(--deep);border-radius:9px;padding:9px 10px;font-weight:600;font-size:13px;cursor:pointer}
+.impb:hover,body.drag .impb{background:var(--sky)}
+#impmsg{font-size:11.5px;color:var(--mut);margin:0;line-height:1.45}#impmsg.ok{color:var(--grn)}#impmsg.ko{color:#d14343}
+.qg{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:0 22px}
+.qi{display:flex;gap:8px;align-items:center;font-size:12.5px;padding:7px 0;border-bottom:1px solid var(--bd)}
+.qi svg{width:16px;height:16px;flex:none}.qi.ok svg{stroke:var(--grn)}.qi.wa svg{stroke:#d48a00}.qi.er svg{stroke:#d14343}
+.qi b{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums}.qi.ok b{color:var(--grn)}
+@media(max-width:820px){#impmsg{display:none}.imp{margin-left:auto}}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="s-ov" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></symbol>
+<symbol id="s-an" viewBox="0 0 24 24"><path d="M3 20h18M6 16v-5M11 16V6M16 16v-8M21 16v-3"/></symbol>
+<symbol id="s-sim" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><rect x="9" y="12" width="6" height="6" rx="1"/></symbol>
+<symbol id="s-bd" viewBox="0 0 24 24"><path d="M4 21V5l8-2v18M12 9h8v12M4 21h16M8 8h1M8 12h1M8 16h1M16 13h1M16 17h1"/></symbol>
+<symbol id="s-tg" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1"/></symbol>
+<symbol id="s-wf" viewBox="0 0 24 24"><path d="M2 9a15 15 0 0 1 20 0M5 13a10 10 0 0 1 14 0M8.5 16.5a5 5 0 0 1 7 0"/><circle cx="12" cy="20" r=".8"/></symbol><symbol id="s-up" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 16v4h16v-4"/></symbol></defs></svg>
+<aside><div class="lg"><img id="lg" alt="MyBestSim"><div><b>MyBestSim</b><span>Market intelligence</span></div></div>
+<nav><a href="#overview" data-v="overview"><svg class="i"><use href="#s-ov"/></svg>Overview</a><a href="#analytics" data-v="analytics"><svg class="i"><use href="#s-an"/></svg>Market &amp; Pricing</a></nav>
+<a class="bi" href="powerbi/">Version rapport BI →</a>
+<div class="imp"><label class="impb" for="imp"><svg class="i"><use href="#s-up"/></svg>Importer des CSV</label><input type="file" id="imp" accept=".csv,text/csv" multiple hidden><p id="impmsg">Déposez les fichiers du jour ici ou sur la page : le tableau de bord se recalcule.</p></div>
+<div class="side-n" id="srcn">Source : fichiers CSV des fournisseurs · prix en EUR</div></aside>
+<div class="content" id="app">
+<div id="load">Chargement des données…</div>
+<div class="flt" id="flt" style="display:none">
+<label>Fournisseur<select id="fp"></select></label><label>Destination<select id="fc"></select></label><label>Volume de data<select id="fd"></select></label>
+<label>Validité<select id="fv"><option value="">Toutes</option><option value="7">7 jours</option><option value="15">15 jours</option><option value="30">30 jours</option></select></label>
+<label>Réseau<select id="fn"><option value="">Tous</option><option value="0">4G</option><option value="1">5G</option></select></label>
+<label>Prix max : <b id="mx"></b><input id="fm" type="range" min="5" max="155" value="155"></label><button class="rs" id="rs">Réinitialiser</button></div>
+<div id="empty"><b>Aucune offre ne correspond à ces filtres</b>Élargissez la sélection ou réinitialisez les filtres.</div>
+<section class="view" id="v-overview">
+<header><div><h1>eSIM <em>Market Overview</em></h1><p>Market intelligence &amp; competitive insights</p></div><div class="upd">Données actualisées le <span class="U"></span></div></header>
+<div class="kpis" id="kpis"></div>
+<div class="card pb" id="pband"></div>
+<div class="g g3"><div class="card"><h3>Offres par fournisseur</h3><p class="d">Nombre de cartes eSIM au catalogue</p><div class="cv t"><canvas id="cSup"></canvas></div></div>
+<div class="card"><h3>Volume de data</h3><p class="d">Part des offres par palier</p><div class="cv t"><canvas id="cMix"></canvas></div></div>
+<div class="card"><h3>Prix selon la durée</h3><p class="d">Prix moyen par durée de validité (€)</p><div class="cv t"><canvas id="cVal"></canvas></div></div></div>
+<div class="card"><h3>Fournisseurs partenaires</h3><p class="d">Cliquez sur un fournisseur pour filtrer le tableau de bord · nombre d'offres et prix d'entrée</p><div class="ptn" id="ptn"></div></div>
+</section>
+<section class="view" id="v-analytics">
+<header><div><h1>Market <em>&amp; Pricing Analytics</em></h1><p>Fournisseurs, prix, destinations et meilleures offres</p></div><div class="upd">Données actualisées le <span class="U"></span></div></header>
+<div class="card" style="margin-bottom:18px"><h3>Comparaison des fournisseurs</h3><p class="d">Cliquez sur une ligne pour isoler un fournisseur. Prix par Go calculé hors offres illimitées.</p><div class="ov"><table class="tb" id="tSup"></table></div></div>
+<div class="g g2"><div class="card"><h3>Fourchette de prix par fournisseur</h3><p class="d">Du prix le plus bas au plus élevé (€)</p><div class="cv t"><canvas id="cRng"></canvas></div></div>
+<div class="card"><h3>Prix moyen selon le volume de data</h3><p class="d">Prix moyen par palier (€)</p><div class="cv t"><canvas id="cTier"></canvas></div></div></div>
+<div class="g g2"><div class="card"><h3>Destinations les plus fournies</h3><p class="d">Offres par destination, zones régionales exclues</p><div class="cv t"><canvas id="cDest"></canvas></div></div>
+<div class="card"><h3>Prix moyen par destination</h3><p class="d">Parmi les 10 destinations les plus fournies (€)</p><div class="cv t"><canvas id="cDp"></canvas></div></div></div>
+<div class="g g2"><div class="card"><h3>Prix moyen par volume et durée</h3><p class="d">Prix moyen d'un forfait (€) · en pointillé, les moyennes par ligne et par colonne</p><div class="ov"><table class="hm" id="hm"></table></div></div>
+<div class="card"><h3>Distribution des prix</h3><p class="d">Nombre d'offres par tranche de 10 €</p><div class="cv"><canvas id="cHist"></canvas></div><div class="lgd" id="hlgd"></div></div></div>
+<div class="g g2"><div class="card"><h3>Top 5 · offres les plus chères</h3><p class="d">Prix le plus élevé du catalogue filtré</p><table class="tb" id="t1"></table></div>
+<div class="card"><h3>Top 5 · meilleur prix par Go</h3><p class="d">Offres illimitées exclues</p><table class="tb" id="t2"></table></div></div>
+<div class="card" style="margin-bottom:18px"><h3>Qualité des données</h3><p class="d" id="qsum"></p><div class="qg" id="qlist"></div></div>
+<p class="note" id="meth"></p>
+</section></div>
+<script>
+let {P,C,R,L,B,U,F,Q}=/*__DATA__*/,Z=["1 Go","3 Go","5 Go","10 Go","20 Go","50 Go","Illimité"],ZN=["Europe","Asie","Monde","Amérique du Nord"],lab=g=>g<0?"Illimité":g+" Go";
+const $=i=>document.getElementById(i),f=(n,d=2)=>n.toLocaleString("fr-FR",{minimumFractionDigits:d,maximumFractionDigits:d}),e=n=>f(n)+" €",avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
+$("lg").src=B;
+const opt=(a,v)=>'<option value="">Tous</option>'+a.map((x,i)=>`<option value="${v?x:i}">${x}</option>`).join("");
+$("fd").innerHTML=opt(Z,1);
+const BL="#12a3ea",NV=getComputedStyle(document.documentElement).getPropertyValue("--navy").trim(),MU=getComputedStyle(document.documentElement).getPropertyValue("--mut").trim();
+Chart.defaults.font.family="Poppins,system-ui,sans-serif";Chart.defaults.font.size=11;Chart.defaults.color=MU;Chart.defaults.borderColor="rgba(120,140,160,.18)";Chart.defaults.maintainAspectRatio=false;
+Chart.defaults.plugins.tooltip.backgroundColor="#0f1c2e";Chart.defaults.plugins.tooltip.padding=10;Chart.defaults.plugins.tooltip.cornerRadius=8;
+const ax=(h,u)=>{const t=u?{callback:v=>v+u}:{};return{x:{grid:{display:!!h},border:{display:false},ticks:h?t:{}},y:{grid:{display:!h},border:{display:false},ticks:h?{}:t}}};
+const mk=(id,type,h,u,opt={})=>new Chart($(id),{type,data:{labels:[],datasets:[]},options:Object.assign({indexAxis:h?"y":"x",plugins:{legend:{display:false}},scales:type=="doughnut"?{}:ax(h,u),animation:{duration:300}},opt)});
+const CH={sup:mk("cSup","bar",1),mix:mk("cMix","doughnut",0,0,{cutout:"66%",plugins:{legend:{display:true,position:"bottom",labels:{usePointStyle:true,boxWidth:8,padding:12}},tooltip:{callbacks:{label:c=>` ${c.label} : ${c.parsed} offres (${f(c.parsed/c.dataset.data.reduce((a,b)=>a+b,0)*100,1)} %)`}}}}),val:mk("cVal","line",0," €",{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>" "+e(c.parsed.y)}}}}),
+rng:mk("cRng","bar",1," €"),tier:mk("cTier","bar",0," €"),dest:mk("cDest","bar",1),dp:mk("cDp","bar",1," €"),hist:mk("cHist","bar",0)};
+const up=(c,l,d,col,extra)=>{c.data.labels=l;c.data.datasets=[Object.assign({data:d,backgroundColor:col||BL,borderRadius:4,maxBarThickness:22},extra||{})];c.update()};
+const clsel=i=>{$("fp").value=$("fp").value==i?"":i;render()};
+let GMIN,GMAX,PM;
+function initData(){document.querySelectorAll(".U").forEach(x=>x.textContent=U);$("fp").innerHTML=opt(P);$("fc").innerHTML=opt(C);
+GMIN=Math.min(...R.map(r=>r[4]));GMAX=Math.max(...R.map(r=>r[4]));PM=Math.ceil(GMAX);$("fm").min=Math.floor(GMIN);$("fm").max=PM;$("fm").value=PM;
+$("srcn").textContent=`Source : ${F} fichiers CSV · ${R.length.toLocaleString("fr-FR")} offres · prix en EUR`;renderQuality()}
+$("ptn").onclick=ev=>{const t=ev.target.closest(".pt");if(t)clsel(t.dataset.i)};
+function render(){const s={p:$("fp").value,c:$("fc").value,d:$("fd").value,v:$("fv").value,n:$("fn").value,m:+$("fm").value};$("mx").textContent=s.m>=PM?"Tous":s.m+" €";
+const M=(r,sk)=>(sk||s.p===""||r[0]==s.p)&&(s.c===""||r[1]==s.c)&&(s.d===""||lab(r[2])==s.d)&&(s.v===""||r[3]==s.v)&&(s.n===""||r[5]==s.n)&&(s.m>=PM||r[4]<=s.m),rows=R.filter(r=>M(r)),rnp=R.filter(r=>M(r,1));
+$("app").classList.toggle("ex",!rows.length);$("load").style.display="none";$("flt").style.display="flex";if(!rows.length)return;
+const pr=rows.map(r=>r[4]),dt=rows.filter(r=>r[2]>=0).map(r=>r[2]),nP=new Set(rows.map(r=>r[0])).size;
+const K=[["s-sim",rows.length.toLocaleString("fr-FR"),"Cartes eSIM"],["s-bd",nP,"Fournisseurs"],["s-tg",e(avg(pr)),"Prix moyen"],["s-wf",dt.length?f(avg(dt),1)+" Go":"–","Data moyenne par carte"]];
+$("kpis").innerHTML=K.map(k=>`<div class="kp"><div class="ic"><svg class="i"><use href="#${k[0]}"/></svg></div><div><small>${k[2]}</small><b>${k[1]}</b></div></div>`).join("");
+const sp=[...pr].sort((a,b)=>a-b),md=sp.length%2?sp[sp.length>>1]:(sp[sp.length/2-1]+sp[sp.length/2])/2,mn=sp[0],mxp=sp[sp.length-1],o100=pr.filter(p=>p>100).length,ps_=v=>Math.max(0,Math.min(100,(v-GMIN)/(GMAX-GMIN)*100));
+$("pband").innerHTML=`<div><small>Fourchette de prix</small><b class="v">${e(mn)} → ${e(mxp)}</b><small>prix le plus bas et le plus haut</small></div><div class="trk" title="Médiane ${e(md)} · moyenne ${e(avg(pr))}"><div class="ln" style="left:${ps_(mn)}%;width:${Math.max(.5,ps_(mxp)-ps_(mn))}%"></div>${mxp>100?`<div class="hi" style="left:${ps_(100)}%;width:${ps_(mxp)-ps_(100)}%"></div>`:""}<div class="m d" style="left:${ps_(md)}%"><span>médiane ${f(md,0)} €</span></div><div class="m a" style="left:${ps_(avg(pr))}%"><span>moyenne ${f(avg(pr),0)} €</span></div><div class="m c" style="left:${ps_(100)}%"><span>100 €</span></div><span class="e" style="left:0">${f(GMIN,0)} €</span><span class="e" style="right:0">${f(GMAX,0)} €</span></div><div class="r"><small>Produits à plus de 100 €</small><b class="v">${o100.toLocaleString("fr-FR")}</b><small>${f(o100/pr.length*100,1)} % des offres (strictement &gt; 100 €)</small></div>`;
+const pc=P.map((p,i)=>{const x=rnp.filter(r=>r[0]==i);return{p,i,n:x.length,mn:x.length?Math.min(...x.map(r=>r[4])):0}}).sort((a,b)=>b.n-a.n||a.p.localeCompare(b.p));
+$("ptn").innerHTML=pc.map(x=>`<div class="pt${s.p==x.i?" on":""}${x.n?"":" off"}" data-i="${x.i}" title="${x.p}"><div class="lo">${L[x.p]?`<img src="${L[x.p]}" alt="${x.p}">`:`<span>${x.p}</span>`}</div><i>${x.n?`${x.n.toLocaleString("fr-FR")} offres · dès ${e(x.mn)}`:"aucune offre"}</i></div>`).join("");
+const VD=[7,15,30],cell=(z,v)=>{const x=rows.filter(r=>lab(r[2])==z&&(v==null||r[3]==v)).map(r=>r[4]);return x.length?avg(x):null},hv=[];Z.forEach(z=>VD.forEach(v=>{const c=cell(z,v);if(c!=null)hv.push(c)}));
+const h0=Math.min(...hv),h1=Math.max(...hv),mixc=(a,b,t)=>"rgb("+a.map((x,i)=>Math.round(x+(b[i]-x)*t)).join(",")+")",col=t=>t<.6?mixc([232,246,253],[18,163,234],t/.6):mixc([18,163,234],[15,28,46],(t-.6)/.4);
+let H="<thead><tr><th>Data</th>"+VD.map(v=>`<th>${v} jours</th>`).join("")+"<th>Toutes</th></tr></thead><tbody>";
+Z.forEach(z=>{if(!rows.some(r=>lab(r[2])==z))return;H+=`<tr><td class="rh">${z}</td>`+VD.map(v=>{const c=cell(z,v);if(c==null)return'<td class="mo">–</td>';const t=h1>h0?(c-h0)/(h1-h0):.5;return`<td style="background:${col(t)};color:${t>.72?"#fff":"#0f1c2e"}" title="${z} · ${v} jours : ${e(c)}">${f(c,0)} €</td>`}).join("")+`<td class="mo">${e(cell(z))}</td></tr>`});
+H+='<tr><td class="rh">Tous</td>'+VD.map(v=>{const x=rows.filter(r=>r[3]==v).map(r=>r[4]);return`<td class="mo">${x.length?e(avg(x)):"–"}</td>`}).join("")+`<td class="mo"><b style="color:var(--deep)">${e(avg(pr))}</b></td></tr></tbody>`;$("hm").innerHTML=H;
+const bins=[];for(let b=0;b<Math.ceil(GMAX/10)*10;b+=10)bins.push(b);
+up(CH.hist,bins.map(b=>`${b}–${b+10} €`),bins.map(b=>pr.filter(p=>p>=b&&p<b+10).length),bins.map(b=>b>=100?"#f5b800":BL),{maxBarThickness:26});CH.hist.options.plugins.tooltip.callbacks={label:c=>` ${c.parsed.y} offres`};CH.hist.update();
+$("hlgd").innerHTML=`<span><i style="background:${BL}"></i>moins de 100 €</span><span><i style="background:#f5b800"></i>tranches à partir de 100 € · ${o100} offres strictement au-delà</span><span>Médiane : <b>${e(md)}</b></span>`;
+$("meth").innerHTML=`<b>Méthodologie.</b> ${R.length.toLocaleString("fr-FR")} SKU distincts issus de ${F} fichiers fournisseurs, tous conservés. Les offres « Illimité » (data vide dans les CSV, ${R.filter(r=>r[2]<0).length.toLocaleString("fr-FR")} offres) sont exclues de la data moyenne et du prix par Go. « Plus de 100 € » s'entend strictement supérieur. Les classements de destinations excluent les zones Europe, Asie, Amérique du Nord et Monde.`;
+const ps=P.map((p,i)=>{const x=rows.filter(r=>r[0]==i),g=x.filter(r=>r[2]>0);return{p,i,n:x.length,avg:avg(x.map(r=>r[4])),min:Math.min(...x.map(r=>r[4])),max:Math.max(...x.map(r=>r[4])),pg:avg(g.map(r=>r[4]/r[2])),g5:avg(x.map(r=>r[5]))*100}}).filter(x=>x.n).sort((a,b)=>b.n-a.n);
+up(CH.sup,ps.map(x=>x.p),ps.map(x=>x.n));
+const zc=Z.map(z=>rows.filter(r=>lab(r[2])==z).length);up(CH.mix,Z,zc,["#d4ecfa","#a9d9f4","#6fc0ee","#12a3ea","#0b7fc0","#0f1c2e","#f5b800"],{borderWidth:2,borderRadius:0,borderColor:getComputedStyle(document.body).backgroundColor==="rgb(10, 20, 32)"?"#101d2c":"#fff"});
+up(CH.val,["7 jours","15 jours","30 jours"],[7,15,30].map(v=>{const x=rows.filter(r=>r[3]==v);return x.length?+avg(x.map(r=>r[4])).toFixed(2):null}),"rgba(18,163,234,.12)",{type:"line",fill:true,borderColor:BL,tension:.3,pointRadius:5,pointBackgroundColor:BL,borderWidth:2.5});
+up(CH.tier,Z,Z.map(z=>{const x=rows.filter(r=>lab(r[2])==z);return x.length?+avg(x.map(r=>r[4])).toFixed(2):null}),Z.map(z=>z=="Illimité"?"#f5b800":BL),{maxBarThickness:34});
+const ra=[...ps].sort((a,b)=>a.avg-b.avg);up(CH.rng,ra.map(x=>x.p),ra.map(x=>[x.min,x.max]),"#6fc0ee",{});CH.rng.options.plugins.tooltip.callbacks={label:c=>{const x=ra[c.dataIndex];return[` ${e(x.min)} – ${e(x.max)}`,` Moyenne : ${e(x.avg)}`]}};CH.rng.update();
+const dc={};rows.forEach(r=>{const n=C[r[1]];if(!ZN.includes(n))(dc[n]=dc[n]||[]).push(r[4])});const td=Object.entries(dc).sort((a,b)=>b[1].length-a[1].length).slice(0,10);
+up(CH.dest,td.map(x=>x[0]),td.map(x=>x[1].length));CH.dest.options.plugins.tooltip.callbacks={label:c=>` ${c.parsed.x} offres (${f(c.parsed.x/rows.length*100,1)} % du catalogue filtré)`};CH.dest.update();
+up(CH.dp,td.map(x=>x[0]),td.map(x=>+avg(x[1]).toFixed(2)),NV);CH.dp.options.plugins.tooltip.callbacks={label:c=>" "+e(c.parsed.x)};CH.dp.update();
+const mx=Math.max(...ps.map(x=>x.avg));
+$("tSup").innerHTML="<thead><tr><th>Fournisseur</th><th>Offres</th><th>Part</th><th>Prix moyen</th><th>Min – Max</th><th>€ / Go</th><th>5G</th></tr></thead><tbody>"+ps.map(x=>`<tr class="cl ${s.p==x.i?"on":""}" onclick="clsel(${x.i})"><td><b>${x.p}</b></td><td>${x.n}</td><td>${f(x.n/rows.length*100,1)} %</td><td><span class="mb" style="width:${Math.round(x.avg/mx*60)}px"></span>${e(x.avg)}</td><td>${f(x.min,0)} – ${f(x.max,0)} €</td><td>${x.pg?e(x.pg):"–"}</td><td>${f(x.g5,0)} %</td></tr>`).join("")+"</tbody>";
+const li=(r,v,y)=>`<tr><td><span class="rk">${v[0]}</span><b>${C[r[1]]}</b></td><td>${lab(r[2])}</td><td>${r[3]} j</td><td>${P[r[0]]}</td><td><span class="pill ${y?"y":""}">${v[1]}</span></td></tr>`,h="<thead><tr><th>Destination</th><th>Data</th><th>Durée</th><th>Fournisseur</th><th>Prix</th></tr></thead><tbody>";
+$("t1").innerHTML=h+[...rows].sort((a,b)=>b[4]-a[4]).slice(0,5).map((r,i)=>li(r,[i+1,e(r[4])])).join("")+"</tbody>";
+$("t2").innerHTML=h.replace("<th>Prix</th>","<th>€ / Go</th>")+rows.filter(r=>r[2]>0).map(r=>[r,r[4]/r[2]]).sort((a,b)=>a[1]-b[1]).slice(0,5).map((x,i)=>li(x[0],[i+1,e(x[1])],1)).join("")+"</tbody>"}
+["fp","fc","fd","fv","fn","fm"].forEach(i=>$(i).oninput=render);
+$("rs").onclick=()=>{["fp","fc","fd","fv","fn"].forEach(i=>$(i).value="");$("fm").value=PM;render()};
+function route(){const a=location.hash=="#analytics"?"analytics":"overview";document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id=="v-"+a));document.querySelectorAll("nav a").forEach(n=>n.classList.toggle("on",n.dataset.v==a));document.title=(a=="analytics"?"Market & Pricing Analytics":"eSIM Market Overview")+" · MyBestSim";window.scrollTo(0,0);Object.values(CH).forEach(c=>c.resize())}
+
+/* --- qualité des données et import de CSV dans le navigateur --- */
+function renderQuality(){$("qsum").textContent=`${F} fichiers · ${R.length.toLocaleString("fr-FR")} lignes contrôlées · ${Q.e} erreur${Q.e>1?"s":""} bloquante${Q.e>1?"s":""} · ${Q.w} alerte${Q.w>1?"s":""}. Le contrôle tourne à chaque import, aucune ligne n'est modifiée.`;
+$("qlist").innerHTML=Q.c.map(([l,lv,n])=>{const k=n?(lv=="error"?"er":"wa"):"ok";return`<div class="qi ${k}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${k=="ok"?'<path d="M20 6L9 17l-5-5"/>':'<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5h.01"/>'}</svg><span>${l}</span><b>${n?n.toLocaleString("fr-FR"):"OK"}</b></div>`}).join("")}
+const REQ=["sku","provider","country_code","country_name","data_gb","data_display","validity_days","price","currency","network","top_up"];
+function parseCSV(t){const out=[];let row=[],fd="",q=false;for(let i=0;i<t.length;i++){const c=t[i];if(q){if(c=='"'){if(t[i+1]=='"'){fd+='"';i++}else q=false}else fd+=c}else if(c=='"')q=true;else if(c==","){row.push(fd);fd=""}else if(c=="\n"||c=="\r"){if(c=="\r"&&t[i+1]=="\n")i++;row.push(fd);fd="";if(row.length>1||row[0]!=="")out.push(row);row=[]}else fd+=c}if(fd!==""||row.length){row.push(fd);out.push(row)}return out}
+async function importFiles(list){const fs=[...list].filter(x=>/\.csv$/i.test(x.name)),m=$("impmsg"),esc=x=>String(x).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+if(!fs.length){m.className="ko";m.textContent="Aucun fichier .csv sélectionné.";return}
+m.className="";m.textContent="Contrôle en cours…";
+const rows=[],err=[],W={cur:0,net:0,top:0,disp:0},NUM=/^\d+(\.\d+)?$/;let ne=0;const add=msg=>{ne++;if(err.length<4)err.push(msg)};
+for(const fl of fs){const a=parseCSV((await fl.text()).replace(/^﻿/,""));if(!a.length)continue;const h=a[0].map(x=>x.trim()),miss=REQ.filter(c=>!h.includes(c));
+if(miss.length){add(`${fl.name} : colonnes manquantes (${miss.join(", ")})`);continue}
+a.slice(1).forEach((v,j)=>{const r={};h.forEach((k,i)=>r[k]=(v[i]||"").trim());r._f=fl.name;r._l=j+2;rows.push(r)})}
+const seen=new Set();
+rows.forEach(r=>{const at=`${r._f} ligne ${r._l}`;
+if(!r.sku||seen.has(r.sku))add(`${at} : SKU ${r.sku?"en double":"vide"}`);seen.add(r.sku);
+if(!r.provider)add(`${at} : fournisseur vide`);
+if(!NUM.test(r.price)||+r.price<=0)add(`${at} : prix invalide « ${r.price} »`);
+if(!/^\d+$/.test(r.validity_days)||+r.validity_days<=0)add(`${at} : durée invalide « ${r.validity_days} »`);
+if(r.data_gb&&!NUM.test(r.data_gb))add(`${at} : volume invalide « ${r.data_gb} »`);
+if(r.currency!=="EUR")W.cur++;if(!/^[45]G$/i.test(r.network))W.net++;if(!/^(oui|non)$/i.test(r.top_up))W.top++;
+if(r.data_gb?(NUM.test(r.data_gb)&&r.data_display!==`${+r.data_gb} Go`):r.data_display!=="Illimité")W.disp++});
+if(ne||!rows.length){m.className="ko";m.innerHTML=`Import refusé : ${ne||"aucune ligne lue"}${ne?` anomalie${ne>1?"s":""} bloquante${ne>1?"s":""}`:""}. Les données affichées n'ont pas changé.<br>${err.map(esc).join("<br>")}`;return}
+P=[...new Set(rows.map(r=>r.provider))].sort();C=[...new Set(rows.map(r=>r.country_name))].sort();
+const pi=new Map(P.map((p,i)=>[p,i])),ci=new Map(C.map((c,i)=>[c,i]));
+R=rows.map(r=>[pi.get(r.provider),ci.get(r.country_name),r.data_gb?Math.trunc(+r.data_gb):-1,+r.validity_days,Math.round(+r.price*100)/100,/^5G$/i.test(r.network)?1:0,/^oui$/i.test(r.top_up)?1:0]);
+F=fs.length;U=new Date().toLocaleDateString("fr-FR");const nw=W.cur+W.net+W.top+W.disp;
+Q={e:0,w:nw,c:[["Colonnes obligatoires présentes","error",0],["SKU renseigné et unique","error",0],["Fournisseur renseigné","error",0],["Prix numérique et positif","error",0],["Durée de validité entière et positive","error",0],["Volume de data numérique (vide = illimité)","error",0],["Prix en EUR","warning",W.cur],["Réseau 4G ou 5G","warning",W.net],["Recharge « oui » ou « non »","warning",W.top],["Volume cohérent avec son libellé","warning",W.disp]]};
+["fp","fc","fd","fv","fn"].forEach(i=>$(i).value="");initData();render();
+m.className="ok";m.textContent=`${F} fichier${F>1?"s":""} · ${R.length.toLocaleString("fr-FR")} offres importées · ${nw} alerte${nw>1?"s":""}. Recalculé dans votre navigateur, rien n'est envoyé.`}
+$("imp").onchange=ev=>{importFiles(ev.target.files);ev.target.value=""};
+addEventListener("dragover",ev=>{ev.preventDefault();document.body.classList.add("drag")});
+addEventListener("dragleave",ev=>{if(!ev.relatedTarget)document.body.classList.remove("drag")});
+addEventListener("drop",ev=>{ev.preventDefault();document.body.classList.remove("drag");importFiles(ev.dataTransfer.files)});
+initData();
+addEventListener("hashchange",route);route();render();
+</script></body></html>
